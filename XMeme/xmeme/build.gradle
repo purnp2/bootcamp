@@ -1,0 +1,53 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.13'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.purn'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '11'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-amqp:2.7.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.7.1'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.1'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // NOTES: Necessary for validating the inputs for the controller.
+    // It was required despite the javax.validation was imprted for @Valid.
+    // Without this spring-validator, an empty POST call was getting marshalled into
+    // PostMemeRequest class despite using the @NotBlank annotation.
+
+    // https://mvnrepository.com/artifact/javax.validation/validation-api
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+
+    // https://mvnrepository.com/artifact/javax.inject/javax.inject
+    implementation 'javax.inject:javax.inject:1'
+    //implementation group: "javax.inject", name: "javax.inject", version: "1"
+    //implementation "org.modelmapper:modelmapper:$rootProject.ext.modelMapperVersion" //Purn from QEats, but it conflicts with current build
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    testImplementation 'com.h2database:h2:2.1.214'
+
+    implementation 'mysql:mysql-connector-java:8.0.29'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.1'
+    //testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.7.1'
+    //testImplementation 'org.springframework.amqp:spring-rabbit-test:2.7.1'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
